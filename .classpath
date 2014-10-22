@@ -2,5 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/time/joda-time-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/mysql/mysql-connector-java-5.1.21-bin.jar"/>
+	<classpathentry kind="lib" path="lib/mybatis/mybatis-3.2.7.jar"/>
+	<classpathentry kind="lib" path="lib/log/logback-classic-1.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/log/logback-core-1.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/log/slf4j-api-1.7.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
