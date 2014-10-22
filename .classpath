@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="mybatis"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/time/joda-time-2.1.jar"/>
@@ -9,5 +10,7 @@
 	<classpathentry kind="lib" path="lib/log/logback-classic-1.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/log/logback-core-1.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/log/slf4j-api-1.7.7.jar"/>
+	<classpathentry kind="lib" path="lib/mybatis/lib/log4j-api-2.0-rc1.jar"/>
+	<classpathentry kind="lib" path="lib/mybatis/lib/log4j-core-2.0-rc1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hawaii.senin.kegg">
+
+  <select id="getOrganismsOfInterest" resultType="edu.hawaii.senin.kegg.persistence.OrganismOfInterest"
+    parameterType="String">
+    SELECT *
+    from
+    organisms_of_interest where tag=#{tag};
+  </select>
+
+</mapper>
