@@ -5,13 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="edu.hawaii.senin.kegg">
 
   <select id="getKOsummary" parameterType="Map" resultType="Map">
-    select gk.ko_id `ko_id`,
-    count(kh.hit_id) `count` from kegg_hits kh
+    select gk.ko_id `ko_id`, count(kh.hit_id) `count` 
+    from kegg_hits kh
     join genes_ko gk on gk.gene_idx=kh.gene_idx
-    join
-    organisms_of_interest oi on oi.organism_idx=kh.organism_idx
-    where kh.tag=#{sample_tag} and
-    oi.tag=#{set_tag}
+    join organisms_of_interest oi on oi.organism_idx=kh.organism_idx
+    where kh.tag=#{sample_tag} and oi.tag=#{set_tag}
     group by gk.ko_id
   </select>
 

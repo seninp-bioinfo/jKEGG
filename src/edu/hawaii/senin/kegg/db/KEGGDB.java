@@ -156,7 +156,7 @@ public class KEGGDB {
     List<HashMap<String, Object>> set = this.session.selectList("getKOsummary", params);
     Map<String, Integer> res = new HashMap<String, Integer>();
     for (HashMap<String, Object> e : set) {
-      res.put((String) e.get("ko_id"), ((BigDecimal) e.get("count")).intValue());
+      res.put((String) e.get("ko_id"), ((Long) e.get("count")).intValue());
     }
     return res;
   }
