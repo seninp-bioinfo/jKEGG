@@ -29,7 +29,7 @@ public class SRPrinter {
 
   // num of threads to use
   //
-  private static final int THREADS_NUM = 10;
+  private static final int THREADS_NUM = 4;
 
   private static final String OUTFNAME = "test_SR_ext_threaded.csv";
 
@@ -68,10 +68,11 @@ public class SRPrinter {
 
       counts.put(tag, tagRes);
 
-      ctr++;
-      if (ctr > 2) {
-        break;
-      }
+      // ctr++;
+      // if (ctr > 2) {
+      // break;
+      // }
+
     }
 
     // all the unique KOs
@@ -96,7 +97,7 @@ public class SRPrinter {
     //
     for (Entry<HitTag, HashMap<String, Integer>> e : counts.entrySet()) {
       for (Entry<String, Integer> ei : e.getValue().entrySet()) {
-        CountJob job = new CountJob(db, e.getKey().getId(), ei.getKey());
+        SRCountJob job = new SRCountJob(db, e.getKey().getId(), ei.getKey());
         completionService.submit((Callable<HashMap<String, Object>>) job);
         totalTaskCounter++;
       }
@@ -163,8 +164,6 @@ public class SRPrinter {
       }
 
     }
-
-    System.exit(10);
 
     // output file
     BufferedWriter bw = new BufferedWriter(new FileWriter(new File(OUTFNAME)));

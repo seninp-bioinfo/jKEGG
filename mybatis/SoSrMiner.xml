@@ -49,5 +49,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     gk.ko_id=#{ko_id} group by
     oi.code order by cnt desc limit 1;
   </select>
+  
+  <select id="selectTopOrganismSO" parameterType="Map" resultType="Map">
+    select count(kh.hit_id)
+    cnt,
+    oi.* from so_hits kh join organisms_of_interest oi on
+    oi.organism_idx=kh.organism_idx join
+    genes_ko gk on gk.gene_idx=kh.gene_idx where kh.tag=#{tag_id} and
+    gk.ko_id=#{ko_id} group by
+    oi.code order by cnt desc limit 1;
+  </select>  
 
 </mapper>

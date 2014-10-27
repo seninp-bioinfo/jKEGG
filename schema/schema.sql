@@ -1,6 +1,5 @@
 -- MySQL dump 10.13  Distrib 5.1.71, for redhat-linux-gnu (x86_64)
 --
--- Host: test-mysql.toulouse.inra.fr    Database: funnymat
 -- ------------------------------------------------------
 -- Server version	5.1.73-log
 
@@ -87,7 +86,7 @@ CREATE TABLE `cog_definition` (
   `cog_id` char(14) DEFAULT NULL,
   `cog_class` char(5) DEFAULT NULL,
   `description` varchar(1024) DEFAULT NULL,
-  KEY `kog_class` (`class`),
+  KEY `kog_class` (`cog_class`),
   KEY `kog_idx` (`cog_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -267,13 +266,13 @@ CREATE TABLE `kegg_hits` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `kegg_hits_new`
+-- Table structure for table `kegg_hits_backup`
 --
 
-DROP TABLE IF EXISTS `kegg_hits_new`;
+DROP TABLE IF EXISTS `kegg_hits_backup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `kegg_hits_new` (
+CREATE TABLE `kegg_hits_backup` (
   `tag` tinyint(4) NOT NULL,
   `hit_id` varchar(23) DEFAULT NULL,
   `organism_idx` int(11) DEFAULT NULL,
@@ -415,11 +414,55 @@ CREATE TABLE `organisms_of_interest` (
   `code` char(4) DEFAULT NULL,
   `tnum` char(6) DEFAULT NULL,
   `organism_idx` int(11) NOT NULL,
+  `name` varchar(75) DEFAULT NULL,
+  `lineage` varchar(1024) DEFAULT NULL,
   UNIQUE KEY `org_tag_idx` (`tag`,`organism_idx`),
   KEY `tag_idx` (`tag`),
   KEY `org_idx` (`organism_idx`),
   FULLTEXT KEY `code_full` (`code`),
   FULLTEXT KEY `tnum_full` (`tnum`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `so_hits`
+--
+
+DROP TABLE IF EXISTS `so_hits`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `so_hits` (
+  `tag` tinyint(4) NOT NULL,
+  `hit_id` varchar(23) DEFAULT NULL,
+  `organism_idx` int(11) DEFAULT NULL,
+  `gene_idx` int(11) DEFAULT NULL,
+  `identity` smallint(6) NOT NULL,
+  `score` smallint(6) NOT NULL,
+  KEY `tag` (`tag`),
+  KEY `organism_idx` (`organism_idx`),
+  KEY `hit_ids` (`hit_id`),
+  KEY `gene_idx_key` (`gene_idx`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sr_hits`
+--
+
+DROP TABLE IF EXISTS `sr_hits`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sr_hits` (
+  `tag` tinyint(4) NOT NULL,
+  `hit_id` varchar(23) DEFAULT NULL,
+  `organism_idx` int(11) DEFAULT NULL,
+  `gene_idx` int(11) DEFAULT NULL,
+  `identity` smallint(6) NOT NULL,
+  `score` smallint(6) NOT NULL,
+  KEY `tag` (`tag`),
+  KEY `organism_idx` (`organism_idx`),
+  KEY `hit_ids` (`hit_id`),
+  KEY `gene_idx_key` (`gene_idx`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -449,4 +492,4 @@ CREATE TABLE `sulfate_reducers` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-22 11:01:33
+-- Dump completed on 2014-10-27 11:23:53
