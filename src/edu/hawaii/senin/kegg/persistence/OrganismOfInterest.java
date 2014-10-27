@@ -6,6 +6,24 @@ public class OrganismOfInterest {
   private String code;
   private String tnum;
   private Integer organism_idx;
+  private String name;
+  private String lineage;
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getLineage() {
+    return lineage;
+  }
+
+  public void setLineage(String lineage) {
+    this.lineage = lineage;
+  }
 
   public String getTag() {
     return tag;

@@ -22,7 +22,9 @@ public class KEGGDBManager {
    * @throws IOException if error occurs.
    */
   public static KEGGDB getProductionInstance() throws IOException {
+    
     org.apache.ibatis.logging.LogFactory.useSlf4jLogging();
+    
     Logger logger = (Logger) LoggerFactory
         .getLogger(org.apache.ibatis.datasource.pooled.PooledDataSource.class);
     logger.setLevel(Level.ERROR);

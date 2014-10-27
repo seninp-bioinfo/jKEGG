@@ -15,12 +15,11 @@ import edu.hawaii.senin.kegg.db.KEGGDB;
 import edu.hawaii.senin.kegg.db.KEGGDBManager;
 import edu.hawaii.senin.kegg.persistence.HitTag;
 import edu.hawaii.senin.kegg.persistence.KODescription;
-import edu.hawaii.senin.kegg.persistence.KOMAP;
 import edu.hawaii.senin.kegg.persistence.MapTitle;
 
-public class SRSOPrinter {
+public class SOPrinter {
 
-  private static final String OUTFNAME = "test.csv";
+  private static final String OUTFNAME = "test_SO.csv";
 
   private static final String COMMA = "\t";
 
@@ -32,7 +31,7 @@ public class SRSOPrinter {
   private static Level LOGGING_LEVEL = Level.INFO;
 
   static {
-    consoleLogger = (Logger) LoggerFactory.getLogger(SRSOPrinter.class);
+    consoleLogger = (Logger) LoggerFactory.getLogger(SOPrinter.class);
     consoleLogger.setLevel(LOGGING_LEVEL);
   }
 
@@ -52,7 +51,7 @@ public class SRSOPrinter {
 
       Integer tagIdx = tag.getId();
 
-      HashMap<String, Integer> tagRes = db.getKoSummarySR(tagIdx);
+      HashMap<String, Integer> tagRes = db.getKoSummarySO(tagIdx);
 
       res.put(tag, tagRes);
 

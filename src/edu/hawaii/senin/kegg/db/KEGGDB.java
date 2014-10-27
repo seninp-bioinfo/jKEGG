@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -14,7 +13,6 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import edu.hawaii.senin.kegg.persistence.HitTag;
 import edu.hawaii.senin.kegg.persistence.KODescription;
-import edu.hawaii.senin.kegg.persistence.KOMAP;
 import edu.hawaii.senin.kegg.persistence.MapTitle;
 import edu.hawaii.senin.kegg.persistence.OrganismOfInterest;
 
@@ -47,7 +45,7 @@ public class KEGGDB {
   private SqlSession session;
 
   private static Logger consoleLogger;
-  private static Level LOGGING_LEVEL = Level.DEBUG;
+  private static Level LOGGING_LEVEL = Level.INFO;
 
   static {
     consoleLogger = (Logger) LoggerFactory.getLogger(KEGGDB.class);
@@ -177,6 +175,14 @@ public class KEGGDB {
 
   public List<MapTitle> getKOMaps(Integer koIdx) {
     return session.selectList("selectMapsByKO", koIdx);
+  }
+
+  public HashMap<String, Object> getTopOrganismSR(String koId, Integer tagId) {
+    HashMap<String, Object> params = new HashMap<String, Object>();
+    params.put("tag_id", tagId);
+    params.put("ko_id", koId);
+    HashMap<String, Object> set = session.selectOne("selectTopOrganismSR", params);
+    return set;
   }
 
 }
