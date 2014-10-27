@@ -2,11 +2,9 @@ package edu.hawaii.senin.kegg.db;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import edu.hawaii.senin.kegg.persistence.HitTag;
-import edu.hawaii.senin.kegg.persistence.KEGGHits;
+import edu.hawaii.senin.kegg.persistence.KODescription;
+import edu.hawaii.senin.kegg.persistence.KOMAP;
+import edu.hawaii.senin.kegg.persistence.MapTitle;
 import edu.hawaii.senin.kegg.persistence.OrganismOfInterest;
 
 /**
@@ -149,15 +149,34 @@ public class KEGGDB {
     return this.session.selectList("getOrganismsOfInterest", tag);
   }
 
-  public Map<String, Integer> getKoSummary(Integer tag, String organismsTag) {
-    Map<String, Object> params = new HashMap<String, Object>();
+  public HashMap<String, Integer> getKoSummarySR(Integer tag) {
+    HashMap<String, Object> params = new HashMap<String, Object>();
     params.put("sample_tag", tag);
-    params.put("set_tag", organismsTag);
-    List<HashMap<String, Object>> set = this.session.selectList("getKOsummary", params);
-    Map<String, Integer> res = new HashMap<String, Integer>();
+    List<HashMap<String, Object>> set = this.session.selectList("getKOsummarySR", params);
+    HashMap<String, Integer> res = new HashMap<String, Integer>();
     for (HashMap<String, Object> e : set) {
       res.put((String) e.get("ko_id"), ((Long) e.get("count")).intValue());
     }
     return res;
   }
+
+  public HashMap<String, Integer> getKoSummarySO(Integer tag) {
+    HashMap<String, Object> params = new HashMap<String, Object>();
+    params.put("sample_tag", tag);
+    List<HashMap<String, Object>> set = this.session.selectList("getKOsummarySO", params);
+    HashMap<String, Integer> res = new HashMap<String, Integer>();
+    for (HashMap<String, Object> e : set) {
+      res.put((String) e.get("ko_id"), ((Long) e.get("count")).intValue());
+    }
+    return res;
+  }
+
+  public KODescription getKO(String koId) {
+    return session.selectOne("selectKObyName", koId);
+  }
+
+  public List<MapTitle> getKOMaps(Integer koIdx) {
+    return session.selectList("selectMapsByKO", koIdx);
+  }
+
 }

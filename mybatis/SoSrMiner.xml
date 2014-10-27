@@ -4,13 +4,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.hawaii.senin.kegg">
 
-  <select id="getKOsummary" parameterType="Map" resultType="Map">
-    select gk.ko_id `ko_id`, count(kh.hit_id) `count` 
-    from kegg_hits kh
+  <select id="getKOsummarySR" parameterType="Map" resultType="Map">
+    select gk.ko_id `ko_id`,
+    count(kh.hit_id) `count`
+    from sr_hits kh
     join genes_ko gk on gk.gene_idx=kh.gene_idx
-    join organisms_of_interest oi on oi.organism_idx=kh.organism_idx
-    where kh.tag=#{sample_tag} and oi.tag=#{set_tag}
+    where
+    kh.tag=#{sample_tag}
     group by gk.ko_id
+  </select>
+
+  <select id="getKOsummarySO" parameterType="Map" resultType="Map">
+    select gk.ko_id `ko_id`,
+    count(kh.hit_id) `count`
+    from so_hits kh
+    join genes_ko gk on gk.gene_idx=kh.gene_idx
+    where
+    kh.tag=#{sample_tag}
+    group by gk.ko_id
+  </select>
+
+  <select id="selectKObyName" parameterType="String" resultType="edu.hawaii.senin.kegg.persistence.KODescription">
+    select * from ko_description
+    where ko_id=#{value}
+  </select>
+
+  <select id="selectMapsByKO" parameterType="Integer" resultType="edu.hawaii.senin.kegg.persistence.MapTitle">
+    select * from map_title mt
+    join ko_map km on km.map_idx=mt.id
+    where km.ko_idx=#{value}
   </select>
 
 </mapper>
