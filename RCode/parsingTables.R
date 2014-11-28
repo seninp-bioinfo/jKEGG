@@ -5,7 +5,7 @@ library(stringr)
 library(plyr)
 library(ShortRead)
 
-reads=readFastq("hcgA_hits.fq")
+reads=readFastq("reads.out.fq")
 
 filenames=list.files(".",pattern="*.table")
 samples=str_extract(filenames, "^(.*?)\\.")
@@ -44,4 +44,10 @@ ids=str_replace_all(str_extract(ids, "^(.*?)\\t"), "\\t","")
 seqs=as.vector(as.character(reads@sread))
 rr=data.frame(read_id=ids,sequence=seqs, stringsAsFactors=FALSE)
 
-res=merge(dd,rr,by=c("read_id"))
+res=merge(dd,rr,by=c("read_id"),all=T)
+
+write.table(res,file="hcgA.csv", quote=T, col.names=T, row.names=F, sep="\t")
+
+
+
+
