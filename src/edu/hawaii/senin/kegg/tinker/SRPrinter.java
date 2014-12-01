@@ -29,9 +29,9 @@ public class SRPrinter {
 
   // num of threads to use
   //
-  private static final int THREADS_NUM = 4;
+  private static final int THREADS_NUM = 5;
 
-  private static final String OUTFNAME = "test_SR_ext_threaded.csv";
+  private static final String OUTFNAME = "test_SR_ext_threaded2.csv";
 
   private static final String COMMA = "\t";
 
@@ -167,6 +167,7 @@ public class SRPrinter {
 
     // output file
     BufferedWriter bw = new BufferedWriter(new FileWriter(new File(OUTFNAME)));
+    db.refreshSession();
 
     // making a table
     bw.write("ko_id" + COMMA + "ko_description" + COMMA + "pathway1" + COMMA + "pathway2" + COMMA

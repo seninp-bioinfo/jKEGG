@@ -29,9 +29,9 @@ public class SOPrinter {
 
   // num of threads to use
   //
-  private static final int THREADS_NUM = 4;
+  private static final int THREADS_NUM = 5;
 
-  private static final String OUTFNAME = "test_SO_ext_threaded.csv";
+  private static final String OUTFNAME = "test_SO_ext_threaded2.csv";
 
   private static final String COMMA = "\t";
 
@@ -69,7 +69,7 @@ public class SOPrinter {
       counts.put(tag, tagRes);
 
       // ctr++;
-      // if (ctr > 2) {
+      // if (ctr > 3) {
       // break;
       // }
 
@@ -167,6 +167,7 @@ public class SOPrinter {
 
     // output file
     BufferedWriter bw = new BufferedWriter(new FileWriter(new File(OUTFNAME)));
+    db.refreshSession();
 
     // making a table
     bw.write("ko_id" + COMMA + "ko_description" + COMMA + "pathway1" + COMMA + "pathway2" + COMMA

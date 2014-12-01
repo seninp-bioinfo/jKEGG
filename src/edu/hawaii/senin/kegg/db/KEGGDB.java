@@ -185,4 +185,8 @@ public class KEGGDB {
     return set;
   }
 
+  public synchronized void refreshSession() {
+    this.session = this.sessionFactory.openSession(ExecutorType.REUSE);
+  }
+
 }
