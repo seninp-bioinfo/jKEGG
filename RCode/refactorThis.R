@@ -1,5 +1,6 @@
 require(RMySQL)
-session <- dbConnect(MySQL(), host="pub-mysql", db="funnymat",user="funnymat", password="MathIsFunny")
+session <- dbConnect(MySQL(), host="XXX", db="YYY",user="ZZZ", password="QQQ")
+
 
 tags <- dbGetQuery(session, "select * from hit_tags")
 current_set_tag <- "sulfur_cycle_SO"
