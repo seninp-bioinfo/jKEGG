@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
+import edu.hawaii.senin.kegg.persistence.AlnEntry;
 import edu.hawaii.senin.kegg.persistence.HitTag;
 import edu.hawaii.senin.kegg.persistence.KODescription;
 import edu.hawaii.senin.kegg.persistence.MapTitle;
@@ -188,5 +189,20 @@ public class KEGGDB {
   public synchronized void refreshSession() {
     this.session = this.sessionFactory.openSession(ExecutorType.REUSE);
   }
+
+  public List<String> getAlignerTags() {
+    return session.selectList("getAlignerTags");
+  }
+
+  public List<String> getAlignerDistinctQueries(String tag) {
+    return session.selectList("getAlignerDistinctQueries", tag);
+  }
+
+  public List<AlnEntry> getAlignerAlignments(String tag, String query) {
+    HashMap<String, Object> params = new HashMap<String, Object>();
+    params.put("tag_id", tag);
+    params.put("query_id", query);
+    return session.selectList("getAlignerAlignments", params);
+ }
 
 }
