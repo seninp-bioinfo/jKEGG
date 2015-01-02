@@ -28,7 +28,7 @@ public class AlignersOverlap {
 
   public static void main(String[] args) throws Exception {
 
-    BufferedWriter bw = new BufferedWriter(new FileWriter(new File("output.txt")));
+    BufferedWriter bw = new BufferedWriter(new FileWriter(new File("alignments-top-length.txt")));
 
     db = KEGGDBManager.getProductionInstance();
 
@@ -45,7 +45,7 @@ public class AlignersOverlap {
         // System.out.println("    - alignments for: " + query + " " + alignments.size());
 
         // Collections.sort(alignments, new AlignmentBitScoreComparator());
-        Collections.sort(alignments, new AlignmentSimilarityComparator());
+        Collections.sort(alignments, new AlignmentLengthComparator());
 
         AlnEntry topHit = alignments.get(alignments.size() - 1);
         // AlnEntry lastHit = alignments.get(0);

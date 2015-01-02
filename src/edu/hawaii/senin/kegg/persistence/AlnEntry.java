@@ -7,6 +7,15 @@ public class AlnEntry {
   private String hit_id;
   private Integer identity;
   private Integer score;
+  private Integer aln_length;
+
+  public Integer getAln_length() {
+    return aln_length;
+  }
+
+  public void setAln_length(Integer aln_length) {
+    this.aln_length = aln_length;
+  }
 
   public String getTag() {
     return tag;
@@ -55,7 +64,8 @@ public class AlnEntry {
     sb.append(this.query_id).append(TAB);
     sb.append(this.hit_id).append(TAB);
     sb.append(this.identity).append(TAB);
-    sb.append(this.score);
+    sb.append(this.score).append(TAB);
+    sb.append(this.aln_length).append(TAB);
     return sb.toString();
   }
 
