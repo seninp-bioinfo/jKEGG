@@ -9,7 +9,7 @@ options(echo=TRUE) # we want see commands in output file
 #
 require(RMySQL)
 session <- dbConnect(MySQL(), host="test-mysql.toulouse.inra.fr", 
-                     db="funnymat",user="funnymat", password="MathIsFunny")
+                     db="funnymat",user="funnymat", password="XXX")
 
 # [0.1] check that KO is given in a command line and exists in DB
 #

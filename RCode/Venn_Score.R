@@ -2,11 +2,11 @@ require("VennDiagram")
 require(RMySQL)
 session <- dbConnect(MySQL(), host="localhost", 
                      db="funnymat",user="funnymat", password="XXX")
-blast_hits = as.vector(unlist(dbGetQuery(session, "select distinct(hit_id) from aligners_tops_score where tag=\"BD\" order by hit_id ASC")))
-last_hits = as.vector(unlist(dbGetQuery(session, "select distinct(hit_id) from aligners_tops_score where tag=\"LAD\" order by hit_id ASC")))
-diamond_hits = as.vector(unlist(dbGetQuery(session, "select distinct(hit_id) from aligners_tops_score where tag=\"DSD\" order by hit_id ASC")))
-lambda_hits = as.vector(unlist(dbGetQuery(session, "select distinct(hit_id) from aligners_tops_score where tag=\"LSD\" order by hit_id ASC")))
-pauda_hits = as.vector(unlist(dbGetQuery(session, "select distinct(hit_id) from aligners_tops_score where tag=\"PSD\" order by hit_id ASC")))
+blast_hits = as.vector(unlist(dbGetQuery(session, "select distinct(ko_id) from aligners_length where tag=\"BD\" order by hit_id ASC")))
+last_hits = as.vector(unlist(dbGetQuery(session, "select distinct(ko_id) from aligners_length where tag=\"LAD\" order by hit_id ASC")))
+diamond_hits = as.vector(unlist(dbGetQuery(session, "select distinct(ko_id) from aligners_length where tag=\"DSD\" order by hit_id ASC")))
+lambda_hits = as.vector(unlist(dbGetQuery(session, "select distinct(ko_id) from aligners_length where tag=\"LSD\" order by hit_id ASC")))
+pauda_hits = as.vector(unlist(dbGetQuery(session, "select distinct(ko_id) from aligners_length where tag=\"PSD\" order by hit_id ASC")))
 
 area1 = length(blast_hits)
 area2 = length(last_hits)
@@ -98,3 +98,8 @@ venn.plot <- draw.quintuple.venn(
           1, 0.55, 1, 0.55, 1, 0.55, 1, 0.55, 1, 0.55, 1, 1, 1, 1, 1, 1.5),
   ind = TRUE
 );
+
+# Writing to file
+png(filename = "ko_dna_length.png");
+grid.draw(venn.plot);
+dev.off();

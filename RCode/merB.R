@@ -52,7 +52,7 @@ write.table(res,file="merB.csv", quote=T, col.names=T, row.names=F, sep="\t")
 
 # saving the table
 #
-session <- dbConnect(MySQL(), host="test-mysql.toulouse.inra.fr", db="funnymat",user="funnymat", password="MathIsFunny")
+session <- dbConnect(MySQL(), host="test-mysql.toulouse.inra.fr", db="funnymat",user="funnymat", password="XXX")
 #
 sql_load_table2=cbind(dd$sample,dd$read_id,dd$reference,dd$identity,dd$score)
 write.table(sql_load_table2,file="merB.load2.txt", quote=F, col.names=F, row.names=F, sep="\t")
