@@ -2,11 +2,12 @@ require("VennDiagram")
 require(RMySQL)
 session <- dbConnect(MySQL(), host="localhost", 
                      db="funnymat",user="funnymat", password="XXX")
-blast_hits = as.vector(unlist(dbGetQuery(session, "select hit_id from aligners_tops_similarity where tag=\"BD\" order by hit_id ASC")))
-last_hits = as.vector(unlist(dbGetQuery(session, "select hit_id from aligners_tops_similarity where tag=\"LAD\" order by hit_id ASC")))
-diamond_hits = as.vector(unlist(dbGetQuery(session, "select hit_id from aligners_tops_similarity where tag=\"DSD\" order by hit_id ASC")))
-lambda_hits = as.vector(unlist(dbGetQuery(session, "select hit_id from aligners_tops_similarity where tag=\"LSD\" order by hit_id ASC")))
-pauda_hits = as.vector(unlist(dbGetQuery(session, "select hit_id from aligners_tops_similarity where tag=\"PSD\" order by hit_id ASC")))
+threshold=95
+blast_hits = as.vector(unlist(dbGetQuery(session, paste("select ko_id from aligners_similarity where tag=\"BD\" and identity>",threshold," order by hit_id ASC",sep=""))))
+last_hits = as.vector(unlist(dbGetQuery(session, paste("select ko_id from aligners_similarity where tag=\"LAD\" and identity>",threshold," order by hit_id ASC",sep=""))))
+diamond_hits = as.vector(unlist(dbGetQuery(session, paste("select ko_id from aligners_similarity where tag=\"DSD\" and identity>",threshold," order by hit_id ASC",sep=""))))
+lambda_hits = as.vector(unlist(dbGetQuery(session, paste("select ko_id from aligners_similarity where tag=\"LSD\" and identity>",threshold," order by hit_id ASC",sep=""))))
+pauda_hits = as.vector(unlist(dbGetQuery(session, paste("select ko_id from aligners_similarity where tag=\"PSD\" and identity>",threshold," order by hit_id ASC",sep=""))))
 
 area1 = length(blast_hits)
 area2 = length(last_hits)
@@ -98,3 +99,9 @@ venn.plot <- draw.quintuple.venn(
           1, 0.55, 1, 0.55, 1, 0.55, 1, 0.55, 1, 0.55, 1, 1, 1, 1, 1, 1.5),
   ind = TRUE
 );
+
+grid.draw(venn.plot)
+
+png(filename = "venn_ko_similarity_95.png");
+grid.draw(venn.plot);
+dev.off();

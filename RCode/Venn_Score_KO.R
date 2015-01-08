@@ -2,12 +2,12 @@ require("VennDiagram")
 require(RMySQL)
 session <- dbConnect(MySQL(), host="localhost", 
                      db="funnymat",user="funnymat", password="XXX")
-threshold=0.75
-blast_hits = as.vector(unlist(dbGetQuery(session, paste("select hit_id from aligners_score where tag=\"BD\" and normalized_score>",threshold," order by hit_id ASC",sep=""))))
-last_hits = as.vector(unlist(dbGetQuery(session, paste("select hit_id from aligners_score where tag=\"LAD\" and normalized_score>",threshold," order by hit_id ASC",sep=""))))
-diamond_hits = as.vector(unlist(dbGetQuery(session, paste("select hit_id from aligners_score where tag=\"DSD\" and normalized_score>",threshold," order by hit_id ASC",sep=""))))
-lambda_hits = as.vector(unlist(dbGetQuery(session, paste("select hit_id from aligners_score where tag=\"LSD\" and normalized_score>",threshold," order by hit_id ASC",sep=""))))
-pauda_hits = as.vector(unlist(dbGetQuery(session, paste("select hit_id from aligners_score where tag=\"PSD\" and normalized_score>",threshold," order by hit_id ASC",sep=""))))
+threshold=0.25
+blast_hits = as.vector(unlist(dbGetQuery(session, paste("select distinct(ko_id) from aligners_score where tag=\"BD\" and normalized_score>",threshold," and evalue<0.01 order by hit_id ASC",sep=""))))
+last_hits = as.vector(unlist(dbGetQuery(session, paste("select distinct(ko_id) from aligners_score where tag=\"LAD\" and normalized_score>",threshold," order by hit_id ASC",sep=""))))
+diamond_hits = as.vector(unlist(dbGetQuery(session, paste("select distinct(ko_id) from aligners_score where tag=\"DSD\" and normalized_score>",threshold," order by hit_id ASC",sep=""))))
+lambda_hits = as.vector(unlist(dbGetQuery(session, paste("select distinct(ko_id) from aligners_score where tag=\"LSD\" and normalized_score>",threshold," order by hit_id ASC",sep=""))))
+pauda_hits = as.vector(unlist(dbGetQuery(session, paste("select distinct(ko_id) from aligners_score where tag=\"PSD\" and normalized_score>",threshold," order by hit_id ASC",sep=""))))
 
 area1 = length(blast_hits)
 area2 = length(last_hits)
@@ -102,6 +102,6 @@ venn.plot <- draw.quintuple.venn(
 
 grid.draw(venn.plot)
 
-png(filename = "venn_hit_score_75.png");
+png(filename = "venn_ko_score_25.png");
 grid.draw(venn.plot);
 dev.off();
