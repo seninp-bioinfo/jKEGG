@@ -6,16 +6,10 @@ public class AlnEntry {
   private String query_id;
   private String hit_id;
   private Integer identity;
-  private Integer score;
+  private Float score;
   private Integer aln_length;
-
-  public Integer getAln_length() {
-    return aln_length;
-  }
-
-  public void setAln_length(Integer aln_length) {
-    this.aln_length = aln_length;
-  }
+  private Integer gaps;
+  private Float evalue;
 
   public String getTag() {
     return tag;
@@ -49,12 +43,36 @@ public class AlnEntry {
     this.identity = identity;
   }
 
-  public Integer getScore() {
+  public Float getScore() {
     return score;
   }
 
-  public void setScore(Integer score) {
+  public void setScore(Float score) {
     this.score = score;
+  }
+
+  public Integer getAln_length() {
+    return aln_length;
+  }
+
+  public void setAln_length(Integer aln_length) {
+    this.aln_length = aln_length;
+  }
+
+  public Integer getGaps() {
+    return gaps;
+  }
+
+  public void setGaps(Integer gaps) {
+    this.gaps = gaps;
+  }
+
+  public Float getEvalue() {
+    return evalue;
+  }
+
+  public void setEvalue(Float evalue) {
+    this.evalue = evalue;
   }
 
   @Override
@@ -66,6 +84,8 @@ public class AlnEntry {
     sb.append(this.identity).append(TAB);
     sb.append(this.score).append(TAB);
     sb.append(this.aln_length).append(TAB);
+    sb.append(this.gaps).append(TAB);
+    sb.append(this.evalue);
     return sb.toString();
   }
 
