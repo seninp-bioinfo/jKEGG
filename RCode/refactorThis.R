@@ -142,6 +142,8 @@ ko_def = function(ko_id) {
   res
 }
 
+org_lineage=matrix(t(unlist( apply(t(t(orgs)),1,qq) )),ncol=3,byrow=T)
+
 ko_defs=t(apply(t(t(kos)),1,function(x){ as.character(unlist(ko_def(x[1])))}))
 colnames(ko_defs)=c("ko_id","ko_definition")
 res4=merge(res2, ko_defs, by.x=c("ko_id"), by.y=c("ko_id"), all=T)

@@ -17,7 +17,7 @@ ko_summary = function(sample_tag) {
   res
 }
 
-#extract the very first table
+#extract the very first table column
 res <- ko_summary(tags[1,1])
 
 #in a loop extract all others, saves the progress
@@ -27,11 +27,11 @@ for(i in c(2:(length(tags$id))) ){
   summary=ko_summary(as.numeric(tag[1]))
   res=merge(res, summary, by.x=c("ko_id"), by.y=c("ko_id"), all=T)
   names(res)[length(names(res))] = paste(tag[2])
-  write.table(res,file="table_progress.csv", quote=T, col.names=T, row.names=F, sep="\t")
+   
 }
 
 #write down the resulting table
-write.table(res,file="table_all_ko_noeuc.csv", quote=T, col.names=T, row.names=F, sep="\t")
+write.table(res,file="/home/joaube/save/table_all_ko_noeuc.csv", quote=T, col.names=T, row.names=F, sep="\t")
 
 #define a function that extracts the KO description and first TEN MAPS
 map_titles=function(ko_id) {
@@ -76,3 +76,56 @@ tmp_set = tmp_set[-1,]
 colnames(tmp_set)=c("ko_id","ko_description",paste("pathway_",1:10,sep=""))
 res2=merge(res, tmp_set, by.x=c("ko_id"), by.y=c("ko_id"), all=T)
 write.table(res2,file="table_all_ko_noeuc_FINAL.csv", quote=T, col.names=T, row.names=F, sep="\t")
+
+
+res2=read.csv("table_all_ko_noeuc_FINAL.csv", as.is=T, quote = "", sep="\t")
+names(res2)=gsub("X.|\\.","",names(res2))
+
+organisms=function(tag, ko_id) {
+  sequence=rep("",1)
+  tag_idx=as.numeric(dbGetQuery(session,paste("
+    select ht.id from hit_tags ht where ht.tag_description=",shQuote(tag))));
+  ko_idx=as.numeric(dbGetQuery(session,paste("
+    select gk.ko_idx from genes_ko gk where gk.ko_id=",shQuote(ko_id)," limit 1")));
+  recordset = dbGetQuery(session, paste("
+    select o.name, count(kh.hit_id) as cnt from noeu_hits kh 
+    join organisms o on o.id=kh.organism_idx 
+    join genes_ko gk on gk.gene_idx=kh.gene_idx 
+    where kh.tag=",tag_idx," and gk.ko_idx=",
+    ko_idx," group by kh.organism_idx order by cnt desc limit 1;",sep=""))
+  if(dim(recordset)[1]>0){
+    res = as.vector(t(recordset))
+    if(length(recordset)>1){
+      sequence = recordset[1:1]
+    }
+  }
+  sequence
+}
+organisms("DNA_130","ko:K00001")
+
+sets=colnames(res2[,2:49])
+kos = res2[,1]
+tmp=data.frame(ko_id=res2[,1],stringsAsFactors=F)
+str(tmp)
+
+for(set in sets){
+  ktmp=cbind(as.matrix(kos,ncol=1),rep("",length(kos)))
+  org_list=t(apply(ktmp,1,function(x){ c(x[1], as.character(unlist(organisms(set, x[1]))))}))
+  colnames(org_list)=c("ko_id",set)
+  tmp=merge(tmp,org_list,by.x=c("ko_id"),by.y=c("ko_id"),all=T)
+  write.table(tmp,file="KO_ORG_table_noeu_progress.csv", quote=T, col.names=T, row.names=F, sep="\t")
+}
+
+names(tmp)<-c("ko_id",paste(names(tmp[2:49]),"_organisms",sep=""))
+
+final_res=merge(res2,tmp,by.x=c("ko_id"),by.y=c("ko_id"),all=T)
+
+ord=c(1)
+for(i in 2:49){
+  ord=c(ord,i,i+59)
+}
+ord=c(ord,50:60)
+fres=final_res[,ord]
+names(fres)
+
+write.table(fres,file="KO_ORG_table_noeu_final.csv", quote=T, col.names=T, row.names=F, sep="\t")
