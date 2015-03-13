@@ -34,7 +34,7 @@ for(f in rs$run_accession){
     if("try-error" %in% class(res)){
       print(paste(res))  
     }else{
-      system ("fastq-dump ",f,".sra",sep="")
+      system ( paste("fastq-dump ",f,".sra",sep=""))
     }
     
   }else{
