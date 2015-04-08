@@ -27,15 +27,21 @@ for(f in rs$run_accession){
   if( 0 == length(list.files(path = ".", pattern = paste("^",f,".*gz$",sep=""))) ){
     
     res <- try( getFASTQfile(f, srcType="fasp", ascpCMD=ascpCMD) )
-    if("try-error" %in% class(res)) print(paste(res))
-    Sys.sleep(10)
     
-    res <- try( getSRAfile(f, sra_con = sra_con, destDir = getwd(), fileType = "sra" ) )
-    if("try-error" %in% class(res)){
-      print(paste(res))  
-    }else{
-      system ( paste("fastq-dump ",f,".sra",sep=""))
+    if("try-error" %in% class(res)) {
+      
+      print( paste("An error while retrieving aspera files",res))
+      
+      res <- try( getSRAfile(f, sra_con = sra_con, destDir = getwd(), fileType = "sra" ) )
+      
+      if("try-error" %in% class(res)){
+        print( paste("An error while retrieving FTP files",res))
+      }else{
+        system ( paste("fastq-dump --split-files --gzip ",f,".sra",sep=""))
+      }
     }
+    
+    Sys.sleep(10)
     
   }else{
     print(paste("Run ",f," found, iterating further", sep=""))  
